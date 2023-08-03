@@ -53,5 +53,6 @@ typedef struct my_list_s
 	struct my_list_s *next;
 } my_list_t;
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
+binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 
 #endif /* _BINARY_TREES_H_ */
