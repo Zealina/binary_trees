@@ -47,4 +47,10 @@ binary_tree_t *binary_trees_ancestor(
 void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));
 int binary_tree_is_complete(const binary_tree_t *tree);
 
+typedef struct my_list_s
+{
+	const binary_tree_t *node;
+	struct my_list_s *next;
+} my_list_t;
+
 #endif /* _BINARY_TREES_H_ */
