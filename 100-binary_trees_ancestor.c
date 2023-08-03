@@ -9,24 +9,41 @@
  */
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second)
 {
-	unsigned int f_height = 0, s_height = 0;
-	binary_tree_t *f_trav, *s_trav;
+	int f_depth = 0, s_depth = 0, d_diff;
+	const binary_tree_t *f_trav, *s_trav, *mov_up, *n_mov_up;
 
 	f_trav = first;
 	s_trav = second;
 	if (first == NULL || second == NULL)
 		return (NULL);
-	while (f_trav != NULL || s_trav != NULL) 
+	while (f_trav || s_trav) 
 	{
-		if (f_trav != NULL)
+		if (f_trav)
 		{
-			f_height++;
+			f_depth++;
 			f_trav = f_trav->parent;
 		}
-		if (s_trav != NULL)
+		if (s_trav)
 		{
-			s_height++;
+			s_depth++;
 			s_trav = s_trav->parent;
 		}
 	}
-	while (abs
+	mov_up = f_depth > s_depth ? first : second;
+	n_mov_up = mov_up != first ? first : second;
+	d_diff = abs(f_depth - s_depth);
+	while (d_diff > 0 && mov_up)
+	{
+		d_diff--;
+		mov_up = mov_up->parent;
+	}
+
+	while (n_mov_up != mov_up && mov_up && n_mov_up)
+	{
+		mov_up = mov_up->parent;
+		n_mov_up = n_mov_up->parent;
+	}
+	if (mov_up == n_mov_up && mov_up)
+		return ((binary_tree_t *)(mov_up));
+	return (NULL);
+}
