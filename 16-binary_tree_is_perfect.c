@@ -10,7 +10,7 @@ int custom_pow(int base, int exponent)
 {
 	if (exponent == 0)
 		return (1);
-	return base * custom_pow(base, exponent - 1);
+	return (base * custom_pow(base, exponent - 1));
 }
 /**
  * count_nodes - Count the number of nodes in a tree
@@ -26,10 +26,10 @@ int count_nodes(const binary_tree_t *tree)
 		return (0);
 	l_nodes = count_nodes(tree->left);
 	r_nodes = count_nodes(tree->right);
-
-	return(r_nodes + l_nodes + 1);
+	return (r_nodes + l_nodes + 1);
 }
 /**
+ * binary_tree_is_perfect - Checks if a binary tree is perfect
  * @tree: The tree to be checked
  *
  * Return: 1 if perfect, 0 otherwise
