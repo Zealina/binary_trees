@@ -1,67 +1,53 @@
 #include "binary_trees.h"
 
 /**
- * bin_tree_is_full - Checks if a binary tree is full
- * @tree: The tree to be checked
- *
- * Return: 1 if full, 0 otherwise
+ * custom_pow - Calculate the power
+ * @base: The base
+ * @exponent: The exponent
+ * Return: The power calculated
  */
-int bin_tree_is_full(const binary_tree_t *tree)
+int custom_pow(int base, int exponent)
 {
-	int l_full, r_full;
-
-	if (tree == NULL)
-		return (0);
-	if (tree->left == NULL && tree->right == NULL)
+	if (exponent == 0)
 		return (1);
-	l_full = bin_tree_is_full(tree->left);
-	r_full = bin_tree_is_full(tree->right);
-	return (l_full && r_full);
+	return base * custom_pow(base, exponent - 1);
 }
 /**
- * bin_tree_height - Measures the height of a binary tree
- * @tree: The tree whose height is to be measured
+ * count_nodes - Count the number of nodes in a tree
+ * @tree: The tree to be counted
  *
- * Return: Height of tree
- *
+ * Return: The number of nodes in tree
  */
-size_t bin_tree_height(const binary_tree_t *tree)
+int count_nodes(const binary_tree_t *tree)
 {
-	size_t l_height, r_height, height = 0;
+	int l_nodes, r_nodes;
 
 	if (tree == NULL)
 		return (0);
-	if (tree->left == NULL && tree->right == NULL)
-		return (0);
+	l_nodes = count_nodes(tree->left);
+	r_nodes = count_nodes(tree->right);
 
-	l_height = bin_tree_height(tree->left);
-	r_height = bin_tree_height(tree->right);
-
-	if (l_height >= r_height)
-		height = l_height + 1;
-	else
-		height = r_height + 1;
-	return (height);
+	return(r_nodes + l_nodes + 1);
 }
 /**
- * binary_tree_is_perfect - Check if tree is perfect
  * @tree: The tree to be checked
  *
  * Return: 1 if perfect, 0 otherwise
  */
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	int l_height, r_height, l_full, r_full;
+	int nodes, height = 0, expected_nodes;
+	const binary_tree_t *current;
 
+	current = tree;
 	if (tree == NULL)
 		return (0);
-	l_height = bin_tree_height(tree->left);
-	r_height = bin_tree_height(tree->right);
-
-	l_full = bin_tree_is_full(tree->left);
-	r_full = bin_tree_is_full(tree->right);
-
-	if (l_height == r_height && l_full == 1 && r_full == 1)
-		return (1);
-	return (0);
+	while (current)
+	{
+		current = current->left;
+		height++;
+	}
+	nodes = count_nodes(tree);
+	expected_nodes = custom_pow(2, height) - 1;
+	return (nodes == expected_nodes);
 }
