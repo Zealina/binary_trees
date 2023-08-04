@@ -16,9 +16,6 @@ binary_tree_t *binary_tree_node(binary_tree_t *parent, int value)
 	new->left = NULL;
 	new->right = NULL;
 	new->n = value;
-	if (parent == NULL)
-		new->parent = NULL;
-	else
-		new->parent = parent;
+	new->parent = parent;
 	return (new);
 }
